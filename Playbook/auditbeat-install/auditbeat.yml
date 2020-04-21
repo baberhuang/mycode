@@ -1,0 +1,7 @@
+- hosts: test1
+  remote_user: softtek
+  gather_facts: True
+  sudo: yes
+
+  roles:
+    - auditbeat_install

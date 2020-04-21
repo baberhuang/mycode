@@ -1,0 +1,6 @@
+- hosts: Nielsen
+  remote_user: softtek
+  gather_facts: True
+
+  roles:
+    - agent_install

@@ -1,0 +1,21 @@
+- name: 拷贝RPM包到远程主机
+  copy:
+    src: /root/auditbeat-7.6.0-x86_64.rpm
+    dest: "{{ Home_Path }}"
+
+- name: 安装RPM包
+  yum:
+    name: "{{ Home_Path }}/auditbeat-7.6.0-x86_64.rpm"
+    state: present
+
+- name: 拷贝配置文间到指定目录
+  copy:
+    src: /root/auditbeat.yml
+    dest: /etc/auditbeat
+    backup: yes
+
+- name: 启动auditbeat并开机启动
+  service:
+    name: auditbeat
+    state: started
+    enabled: yes

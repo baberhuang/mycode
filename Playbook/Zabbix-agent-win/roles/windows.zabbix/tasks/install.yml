@@ -1,0 +1,49 @@
+- name: 下载MSI包
+  win_get_url:
+    url: https://www.zabbix.com/downloads/4.0.17/zabbix_agent-4.0.17-windows-amd64-openssl.msi
+    dest: C:\zabbix_agent-4.0.17-windows-amd64-openssl.msi
+
+- name: 安装软件
+  win_package:
+    path: C:\zabbix_agent-4.0.17-windows-amd64-openssl.msi
+    state: present
+    
+- name: 修改zabbix_agent配置_1
+  win_lineinfile:
+    path: C:\Program Files\Zabbix Agent\zabbix_agentd.conf
+    regexp: "Server=127.0.0.1"
+    insertbefore: "### Option: ListenPort"
+    line: "Server={{ SERVER_IP }}"
+    
+- name: 修改zabbix_server配置_2
+  win_lineinfile:
+    path: C:\Program Files\Zabbix Agent\zabbix_agentd.conf
+    insertafter: "# StartAgents=3"
+    line: "StartAgents=3"
+
+- name: 修改zabbix_server配置_3
+  win_lineinfile:
+    path: C:\Program Files\Zabbix Agent\zabbix_agentd.conf
+    regexp: "ServerActive=127.0.0.1"
+    insertbefore: "### Option: Hostname"
+    line: "ServerActive={{ SERVER_IP }}"
+
+- name: 修改zabbix_server配置_4
+  win_lineinfile:
+    path: C:\Program Files\Zabbix Agent\zabbix_agentd.conf
+    regexp: "Hostname=Zabbix server"
+    insertbefore: "### Option: HostnameItem"
+    line: "Hostname={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    
+- name: 修改zabbix_server配置_5
+  win_lineinfile:
+    path: C:\Program Files\Zabbix Agent\zabbix_agentd.conf
+    insertafter: "# UnsafeUserParameters=0"
+    line: "UnsafeUserParameters=1"
+    
+- name: 启动zabbix-agent并开机启动
+  
+  win_service:
+    name: Zabbix Agent
+    start_mode: auto
+    state: started

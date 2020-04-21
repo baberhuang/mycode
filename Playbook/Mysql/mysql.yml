@@ -1,0 +1,8 @@
+#用于批量安装MySQL
+---
+- hosts:  172.16.98.190
+  remote_user: root
+  gather_facts: True
+
+  roles:
+    - mysql_install

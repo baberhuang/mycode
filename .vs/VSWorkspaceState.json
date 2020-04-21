@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Playbook",
+    "\\Playbook\\Zabbix-agent-win\\roles",
+    "\\Playbook\\Zabbix-agent-win\\roles\\windows.zabbix",
+    "\\Playbook\\Zabbix-agent-win\\roles\\windows.zabbix\\tasks"
+  ],
+  "SelectedNode": "\\Playbook\\Zabbix-agent-win",
+  "PreviewInSolutionExplorer": true
+}
